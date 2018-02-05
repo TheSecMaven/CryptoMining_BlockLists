@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+
 import sys
 import requests
 import ssl
@@ -7,6 +7,7 @@ from coinhive_pull import main as hivemain
 from adblock_pull import main as adblockmain
 from sans_pull import main as sansmain
 from submit_event import generate_cef_event,syslog,which_field
+__author__ = 'mkkeffeler'
 
 
 #Miclain Keffeler
@@ -39,19 +40,24 @@ def main():
 
     domains = ["coinhive_domains.csv","coinblocker_domains.csv","adblock_domains.csv"]
     IPs = ["Coinblocker_IPs.csv","threatlist.csv"]
-
+    linecount = 0
     for file in domains:  #Submit all of the domains
         with open(file,"r") as readfile:
             for line in readfile:   #Generate events for all entries
-                event = generate_cef_event("Domain",str(line.split(",")[0]),"NULL")
-                syslog(event)
-                print(event)
+                linecount += 1
+                if (linecount != 1): #If we are not looking at the header of the file
+                    event = generate_cef_event("Domain",str(line.split(",")[0]),"NULL")
+                    syslog(event)
+                    print(event)
+    linecount = 0
     for file in IPs:  #Submit all of the IP's
         with open(file,"r") as readfile:
             for line in readfile:   #Generate events for all entries
-                event = generate_cef_event("IP",str(line.split(",")[0]),"NULL")
-                syslog(event)
-                print(event)
+                linecount += 1
+                if (linecount != 1): #If we are not looking at the header of the file
+                    event = generate_cef_event("IP",str(line.split(",")[0]),"NULL")
+                    syslog(event)
+                    print(event)
     print ("All Events Pushed")
 
 if __name__ == "__main__":

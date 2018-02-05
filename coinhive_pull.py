@@ -1,6 +1,9 @@
+
 import sys
 import requests
 import ssl
+__author__ = 'mkkeffeler'
+
 #Miclain Keffeler
 #Pulls and parses a coinhive list of domains 
 #usage: python coinhive_pull.py

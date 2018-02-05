@@ -1,5 +1,8 @@
+
 import sys
 import requests
+__author__ = 'mkkeffeler'
+
 #Miclain Keffeler
 #Pulls and parses a adblock list of domains 
 #usage: python adblock_pull.py
@@ -23,7 +26,7 @@ def main():
     res = requests.get(url, proxies=proxy, verify=True, timeout=10).text
     if str(res.split("\n")[8].split("Last modified: ")[1]) != str(last_updatedtimecheck()): #If the file has been updated since last pull
         adblock_domains = open(filename, 'w+')
-        adblock_domains.write('IP,' + '\n')
+        adblock_domains.write('Domain,' + '\n')
         last_updatedtimewrite(res.split("\n")[8].split("Last modified: ")[1])
         for line in res.split("\n"):
                 if '#' in line or line == "":

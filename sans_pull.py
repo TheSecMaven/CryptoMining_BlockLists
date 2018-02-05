@@ -1,7 +1,10 @@
+
 import sys
 import requests
 import xml.etree.ElementTree as ET
 import ssl
+__author__ = 'mkkeffeler'
+
 #Miclain Keffeler
 #Pulls and parses a coinhive list of domains 
 #usage: python sans_pull.py
