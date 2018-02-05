@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import sys
 import requests
 import ssl
@@ -7,18 +6,16 @@ import ssl
 #usage: python coinhive_pull.py
 #Built for 2.7
 def main():
-    filename = "coinhive_domains.csv"
-    coinhive_output = open(filename, 'w+')
+	filename = "coinhive_domains.csv"
+	coinhive_output = open(filename, 'w+')
 
-    coinhive_output.write('domain' + '\n')
-    proxy = {'https': 'http://proxy.autozone.com:8080/'}
+	coinhive_output.write('domain,' + '\n')
+	proxy = {'https': 'http://proxy.autozone.com:8080/'}
+	url = 'https://raw.githubusercontent.com/Marfjeh/coinhive-block/master/domains'
 
-    url = 'https://raw.githubusercontent.com/Marfjeh/coinhive-block/master/domains'
-
-    res = requests.get(url, proxies=proxy, verify=True, timeout=10).text
-    for line in res.split("\n"):
-        coinhive_output.write(line)
+	res = requests.get(url, proxies=proxy, verify=True, timeout=10).text
+	for line in res.split("\n"):
+		coinhive_output.write(str(line) + "\n")
 
 if __name__ == "__main__":
-
     main()

@@ -1,4 +1,3 @@
-#!/usr/bin/python2.7
 import sys
 import requests
 import ssl
@@ -37,7 +36,7 @@ def main():
     for line in res.split("\n"):
         coinhive_output.write(repr(line)[2:-1] + "\n")
 
-    url = 'https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/lis _optional.txt' #optional domains list
+    url = 'https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/list_optional.txt' #optional domains list
     res = requests.get(url, proxies=proxy, verify=True, timeout=10).text
     for line in res.split("\n"):
         coinhive_output.write(repr(line)[2:-1] + "\n")
@@ -51,9 +50,7 @@ def main():
 
     url = 'https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/MiningServerIPList.txt' #mining server IP list
     res = requests.get(url, proxies=proxy, verify=True, timeout=10).text
-    if str(res.split("\n")[1].split("Last modified: ")[1]) == str(last_updatedtimecheck()):
-        print "QUIT"
-    else:
+    if str(res.split("\n")[1].split("Last modified: ")[1]) != str(last_updatedtimecheck()):
         IP_addresses = open(filename, 'w+')
         IP_addresses.write('IP' + '\n')
         last_updatedtimewrite(res.split("\n")[1].split("Last modified: ")[1])
@@ -61,7 +58,9 @@ def main():
             if '#' in line:
                 continue
             else:
-                IP_addresses.write(repr(line)[2:-1] + "\n")
+                if (validate_IPV4_azure_clientIP(str(repr(line)[2:-1]))):
+                    IP_addresses.write(repr(line)[2:-1] + "\n")
+
         IP_addresses.close()
 
 

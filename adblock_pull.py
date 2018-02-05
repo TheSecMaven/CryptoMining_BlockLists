@@ -1,4 +1,3 @@
-#!/usr/bin/python2.7
 import sys
 import requests
 #Miclain Keffeler
@@ -22,9 +21,7 @@ def main():
 
     url = 'https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/hosts.txt' #mining server Domain List
     res = requests.get(url, proxies=proxy, verify=True, timeout=10).text
-    if str(res.split("\n")[8].split("Last modified: ")[1]) == str(last_updatedtimecheck()): #If the file hasn't been updated since last pull
-        exit()
-    else:
+    if str(res.split("\n")[8].split("Last modified: ")[1]) != str(last_updatedtimecheck()): #If the file has been updated since last pull
         adblock_domains = open(filename, 'w+')
         adblock_domains.write('IP,' + '\n')
         last_updatedtimewrite(res.split("\n")[8].split("Last modified: ")[1])

@@ -1,4 +1,3 @@
-#!/usr/bin/python2.7
 import sys
 import requests
 import xml.etree.ElementTree as ET
@@ -7,10 +6,9 @@ import ssl
 #Pulls and parses a coinhive list of domains 
 #usage: python sans_pull.py
 #Built for 2.7
- 
+#TODO: Implement last updated/modified time so that if an IP has already been seen we don't send it as a CEF 2 times within a day or less of each other
 if hasattr(ssl, '_create_unverified_context'):
-
-        ssl._create_default_https_context = ssl._create_unverified_context
+    ssl._create_default_https_context = ssl._create_unverified_context
 def main():
 
     filename = "threatlist.csv"
@@ -20,7 +18,7 @@ def main():
     proxy = {'https': 'http://proxy.autozone.com:8080/'}
 
     url = 'https://isc.sans.edu/api/threatlist/miner'
-    res = requests.get(url, verify=True, timeout=10).text
+    res = requests.get(url, proxies=proxy,verify=True, timeout=10).text
     root = ET.fromstring(res)
 
     for miner in root.iter(tag='miner'):
