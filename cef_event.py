@@ -34,21 +34,28 @@ def dynamic_event_names(category):   #Names the event based on what it is
         return 'Known Crypto Domain'
     if(category == 'IP'):
         return 'Known Crypto IP'
-
-def which_field(category):           #Used to specify a cef custom field based on what information is being pulled
+def domain_ip(category):   #Domain or IP
     if(category == 'Domain'):
-        return '|shost='
+        return 'Domain'
     if(category == 'IP'):
-        return '|src='
+        return 'IP'
+def which_field(category,msg):           #Used to specify a cef custom field based on what information is being pulled
+    if(category == 'Domain'):
+        return '|shost=' + msg + ' dhost=' + msg
+    if(category == 'IP'):
+        return '|src=' + msg + ' dst=' + msg
 def date_parse(date_string):                          #This function parses the date that comes from the raw JSON output and puts it in a Month/Day/Year format
     parsed_date = dateutil.parser.parse(date_string).strftime("%b %d %Y %H:%M:%S")
     return parsed_date
     f = codecs.open('test', encoding='utf-8', mode='w+')
 
 
-def generate_cef_event(category,to_be_blacklisted,updated_time):   #Called from other scripts to compile and completely generate the text for cef event
+def generate_cef_event(category,to_be_blacklisted,updated_time,feed_name):   #Called from other scripts to compile and completely generate the text for cef event
     message = ""
     event_name = str(dynamic_event_names(category))
-    message = "Blacklisted Item: " + str(codecs.decode(to_be_blacklisted,'unicode_escape').replace('=', '\\='))
-    cef = 'CEF:0|Crypto|Crypto List|1.0|100|' + event_name + '|1' + which_field(category) + str(codecs.decode(to_be_blacklisted,'unicode_escape').replace('=', '\\=')) + ' end='+ str(date_parse(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'))) +' msg=' + message
+    message = "Crypto " + domain_ip(category) + ": " + str(codecs.decode(repr(to_be_blacklisted),'unicode_escape').replace('=', '\\='))
+    cef = 'CEF:0|' + str(feed_name) + '|Crypto Intel|1.0|100|' + event_name + '|1' + which_field(category,codecs.decode(repr(to_be_blacklisted),'unicode_escape').replace('=', '\\=')) + ' end='+ str(date_parse(datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'))) +' msg=' + message
     return cef
+
+
+
