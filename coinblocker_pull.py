@@ -1,3 +1,4 @@
+#!/az/arcsight/counteract_scripts/env/bin/python
 
 import sys
 import requests
@@ -24,6 +25,7 @@ def validate_IPV4_azure_clientIP(address):
     if len(parts) != 4:
         return False
     for item in parts:
+        print (item)
         if not 0 <= int(item) <= 255:
             return False
     return True 

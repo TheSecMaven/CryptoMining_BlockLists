@@ -37,7 +37,7 @@ def main():
     coinmain()
     hivemain() #Call all the mains to update and create newest files
     adblockmain()
-    sansmain()
+   # sansmain(),
 
     domains = ["coinhive_domains.csv","coinblocker_domains.csv","adblock_domains.csv"]
     IPs = ["Coinblocker_IPs.csv","threatlist.csv"]
