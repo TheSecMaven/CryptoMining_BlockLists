@@ -7,7 +7,7 @@ from coinblocker_pull import main as coinmain
 from coinhive_pull import main as hivemain
 from adblock_pull import main as adblockmain
 from sans_pull import main as sansmain
-from submit_event import generate_cef_event,syslog,which_field
+from submit_event import generate_cef_event,which_field
 __author__ = 'mkkeffeler'
 
 

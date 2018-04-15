@@ -11,15 +11,15 @@ from optparse import OptionParser
 import hashlib
 import base64
 import socket
-from sqlalchemy import Column, Text, ForeignKey, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import types
-from sqlalchemy import exists
+#from sqlalchemy import Column, Text, ForeignKey, Integer, String
+#from sqlalchemy.ext.declarative import declarative_base
+#from sqlalchemy.orm import relationship
+#from sqlalchemy import create_engine
+##from sqlalchemy.orm import sessionmaker
+#from sqlalchemy import types
+#from sqlalchemy import exists
 import dateutil.parser
-from sqlalchemy.sql.expression import literal_column
+#from sqlalchemy.sql.expression import literal_column
 from cef_event import generate_cef_event
 import os
 from configparser import ConfigParser
@@ -50,9 +50,9 @@ def which_field(category):   #Get appropriate json key based on what we are look
     if(category == 'recent_urls'):
         return 'location'
 
-engine = create_engine('sqlite:///IP_Report.db')
-DBSession = sessionmaker(bind = engine)
-session = DBSession()
+#engine = create_engine('sqlite:///IP_Report.db')
+#DBSession = sessionmaker(bind = engine)
+#session = DBSession()
 
 CONFIG = {}
 
