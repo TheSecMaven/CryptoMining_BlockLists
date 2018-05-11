@@ -52,23 +52,26 @@ def main():
         coinhive_output.write(repr(line)[2:-1] + "\n")
     coinhive_output.close()
     filename = "Coinblocker_IPs.csv"
-
     url = 'https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/MiningServerIPList.txt' #mining server IP list
     res = requests.get(url, proxies=proxy, verify=True, timeout=10).text
-    if str(res.split("\n")[1].split("Last modified: ")[1]) != str(last_updatedtimecheck()):
-        IP_addresses = open(filename, 'w+')
-        IP_addresses.write('IP' + '\n')
-        last_updatedtimewrite(res.split("\n")[1].split("Last modified: ")[1])
-        for line in res.split("\n"):
-            if '#' in line:
-                continue
-            else:
-                if (validate_IPV4_azure_clientIP(str(repr(line)[2:-1]))):
-                    IP_addresses.write(repr(line)[2:-1] + "\n")
-
+    #if str(res.split("\n")[1].split("Last modified: ")[1]) != str(last_updatedtimecheck()):
+    IP_addresses = open(filename, 'w+')
+    IP_addresses.write('IP' + '\n')
+    last_updatedtimewrite(res.split("\n")[4].split("Last modified: ")[1])
+    if last_updatedtimecheck() == res.split("\n")[4].split("Last modified: ")[1]:
         IP_addresses.close()
-
-
+        return
+    for line in res.split("\n"):
+        if '#' in line:
+            continue
+        else:
+            print (line)
+            if (validate_IPV4_azure_clientIP(str(repr(line)[1:-1]))):
+                 IP_addresses.write(repr(line)[1:-1] + "\n")
+    print ("WHAT?")
+    IP_addresses.close()
+    print ("AMAZINGF")
+    return
 
 if __name__ == "__main__":
 

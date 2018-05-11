@@ -21,5 +21,3 @@ def main():
 	for line in res.split("\n"):
 		coinhive_output.write(str(line) + "\n")
 
-if __name__ == "__main__":
-    main()

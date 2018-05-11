@@ -38,26 +38,25 @@ def main():
     hivemain() #Call all the mains to update and create newest files
     adblockmain()
    # sansmain(),
-
     domains = ["coinhive_domains.csv","coinblocker_domains.csv","adblock_domains.csv"]
     IPs = ["Coinblocker_IPs.csv"]
     linecount = 0
-    for file in domains:  #Submit all of the domains
+    for files in domains:  #Submit all of the domains
         linecount = 0 
-        with open(file,"r") as readfile:
+        with open(files,"r") as readfile:
             for line in readfile:   #Generate events for all entries
                 linecount += 1
                 if (linecount != 1): #If we are not looking at the header of the file
-                    event = generate_cef_event("Domain",str(line.split(",")[0]),"NULL",file[:-12])
+                    event = generate_cef_event("Domain",str(line.split(",")[0]),"NULL",files[:-12])
  #                   syslog(event)
                     print(event)
-    for file in IPs:  #Submit all of the IP's
+    for files in IPs:  #Submit all of the IP's
         linecount = 0
-        with open(file,"r") as readfile:
+        with open(files,"r") as readfile:
             for line in readfile:   #Generate events for all entries
                 linecount += 1
                 if (linecount != 1): #If we are not looking at the header of the file
-                    event = generate_cef_event("IP",str(line.split(",")[0]),"NULL",file[:-8])
+                    event = generate_cef_event("IP",str(line.split(",")[0]),"NULL",files[:-8])
 #                    syslog(event)
                     print(event)
     print ("All Events Pushed")
